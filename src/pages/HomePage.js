@@ -1,9 +1,13 @@
+import { useState } from "react";
+
 import { Container, Typography, Box } from "@material-ui/core";
 
 import Traits from "../components/Traits";
-import TraitsTabs from "../components/TraitsTabs";
+import TraitsTabs from "../components/Traits/TraitsTabs";
 
 export default function HomePage() {
+  const [selectedItems, setSelectedItems] = useState([]);
+
   return (
     <Container maxWidth="xl">
       <Box sx={{ py: 2 }}>
@@ -12,8 +16,8 @@ export default function HomePage() {
         </Typography>
       </Box>
 
-      <TraitsTabs>
-        <Traits />
+      <TraitsTabs selectedItems={selectedItems}>
+        <Traits setSelectedItems={setSelectedItems} />
       </TraitsTabs>
     </Container>
   );

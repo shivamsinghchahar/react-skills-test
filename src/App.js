@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import { useThemeState } from "./contexts/theme";
 import HomePage from "./pages/HomePage";
+import { isDark } from "./utils";
 
 function App() {
   const { theme } = useThemeState();
@@ -9,7 +10,7 @@ function App() {
       className="App"
       style={{
         minHeight: "100vh",
-        backgroundColor: theme === "light" ? "white" : "#b0bec5",
+        backgroundColor: isDark(theme) ? "#b0bec5" : "white",
       }}
     >
       <Header />

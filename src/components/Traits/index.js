@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 
 import { DataGrid, GridColumnsToolbarButton } from "@material-ui/data-grid";
+import PropTypes from "prop-types";
 
-import Trait from "./Trait";
-import { traits } from "../apis/traits";
+import { traits } from "../../apis/traits";
+import Trait from "../Trait";
 
 const columns = [
   {
@@ -28,7 +29,7 @@ const columns = [
   },
 ];
 
-export default function Traits() {
+export default function Traits({ setSelectedItems }) {
   const [loading, setLoading] = useState(false);
   const [traitsData, setTraitsData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,6 +79,9 @@ export default function Traits() {
           checkboxSelection
           disableColumnMenu
           disableSelectionOnClick
+          onSelectionModelChange={({ selectionModel }) =>
+            setSelectedItems(selectionModel)
+          }
         />
 
         <Trait isOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
@@ -85,3 +89,7 @@ export default function Traits() {
     )
   );
 }
+
+Traits.propTypes = {
+  setSelectedItems: PropTypes.func.isRequired,
+};

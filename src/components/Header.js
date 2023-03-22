@@ -9,19 +9,20 @@ import { Menu as MenuIcon, AccountCircle } from "@material-ui/icons";
 
 import ThemeSwitch from "./ThemeSwitch";
 import { useTheme } from "../contexts/theme";
+import { isDark } from "../utils";
 
 export default function Header() {
   const [{ theme }, dispatch] = useTheme();
 
   const handleClick = () => {
-    dispatch({ type: theme === "light" ? "DARK" : "LIGHT" });
+    dispatch({ type: isDark(theme) ? "LIGHT" : "DARK" });
   };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
-        style={{ backgroundColor: theme === "light" ? "#283593" : "#263238" }}
+        style={{ backgroundColor: isDark(theme) ? "#263238" : "#283593" }}
       >
         <Toolbar>
           <IconButton
@@ -54,7 +55,7 @@ export default function Header() {
                 <ThemeSwitch
                   value={theme}
                   onClick={handleClick}
-                  defaultChecked={theme === "dark"}
+                  defaultChecked={isDark(theme)}
                 />
               </div>
               <IconButton
