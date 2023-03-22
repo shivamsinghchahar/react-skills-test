@@ -1,19 +1,14 @@
 import { useState } from "react";
 
 import { Tabs, Tab, Box, Button } from "@material-ui/core";
-import PropTypes from "prop-types";
+import PropTypes, { number } from "prop-types";
 
-import TabPanel from "./TabPanel";
-import { useThemeState } from "../contexts/theme";
+import { useThemeState } from "../../contexts/theme";
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+import { a11yProps, isDark } from "../../utils";
+import TabPanel from "../TabPanel";
 
-export default function TraitsTabs({ children }) {
+export default function TraitsTabs({ children, selectedItems }) {
   const [value, setValue] = useState(0);
   const { theme } = useThemeState();
 
@@ -32,16 +27,25 @@ export default function TraitsTabs({ children }) {
           <Tab label="Traits" {...a11yProps(0)} />
           <Tab label="Traits Use Case" {...a11yProps(1)} disabled />
           <Tab label="Traits Responses" {...a11yProps(2)} disabled />
-          <Button
-            color="primary"
-            variant="contained"
+          <Box
             style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
               marginLeft: "auto",
-              backgroundColor: theme === "light" ? "#283593" : "#263238",
             }}
           >
-            Create Trait
-          </Button>
+            <Button
+              color="primary"
+              variant="contained"
+              style={{
+                marginLeft: "auto",
+                backgroundColor: isDark(theme) ? "#263238" : "#283593",
+              }}
+            >
+              {selectedItems.length ? "REUSE" : "Create Trait"}
+            </Button>
+          </Box>
         </Tabs>
       </Box>
 
@@ -60,4 +64,5 @@ export default function TraitsTabs({ children }) {
 
 TraitsTabs.propTypes = {
   children: PropTypes.node.isRequired,
+  selectedItems: PropTypes.arrayOf(number).isRequired,
 };
